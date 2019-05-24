@@ -1,13 +1,12 @@
 import React from 'react'
+import './Gamepage.css'
 import Partybar from '../components/Partybar'
 
 class Gamepage extends React.Component{
 
     render(){
         return(
-            <div className="ui container" style={{ marginTop: 50+'px' }}>
                 <Partybar />
-            </div>
         )
     }
 }

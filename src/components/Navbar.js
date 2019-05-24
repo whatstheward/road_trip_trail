@@ -10,7 +10,7 @@ class Navbar extends React.Component {
     render(){
     const { activeItem }=this.state
         return(
-            <Menu className="ui top attached menu" style="">
+            <div className="ui top attached menu" style={{height: '7em'}}>
             <Menu.Item
                 name='editorials'
                 active={activeItem === 'editorials'}
@@ -28,7 +28,7 @@ class Navbar extends React.Component {
             <Menu.Item name='editorials'>
             <Button>Login</Button>
             </Menu.Item>
-            </Menu>)
+            </div>)
     }
 }
 

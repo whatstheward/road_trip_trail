@@ -1,5 +1,7 @@
 import React from 'react'
-import { Header, Icon, Image, Menu, Segment, Sidebar } from 'semantic-ui-react'
+import './Partybar.css'
+import CharacterCard from './CharacterCard.js'
+import { Header, Icon, Image, Menu, Segment, Sidebar, Card } from 'semantic-ui-react'
 
 class Partybar extends  React.Component{
     constructor(){
@@ -11,9 +13,10 @@ class Partybar extends  React.Component{
 
     render(){
         return(
-                <Sidebar icon='labeled' inverted vertical visible>
+                <div>
+                    <CharacterCard />
 
-                </Sidebar>
+                </div>
         )
     }
 }
