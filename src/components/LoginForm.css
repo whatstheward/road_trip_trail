@@ -1,0 +1,16 @@
+.ui#loginForm{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10em;
+}
+
+.ui#login{
+    padding: 1em;
+    width: 30em;
+}
+
+div #login.ui.card{
+
+}
+

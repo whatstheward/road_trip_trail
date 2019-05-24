@@ -9,8 +9,16 @@ class Navbar extends React.Component {
     
     render(){
     const { activeItem }=this.state
+    const menuClasses = `ui inverted ${this.props.color} menu`
+    const iconClasses = `icon ${this.props.icon}`
         return(
-            <div className="ui top attached menu" style={{height: '7em'}}>
+            <div className={menuClasses} style={{height: '7em'}}>
+                <h2 className="ui header">
+                    <i className={iconClasses} style={{padding:'1em'}}></i>
+                    <div className="content">The Road Trip Trail
+                    <div className="sub header">a modern expedition</div>
+                    </div>
+                </h2>
             <Menu.Item
                 name='editorials'
                 active={activeItem === 'editorials'}
