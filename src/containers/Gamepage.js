@@ -1,12 +1,16 @@
 import React from 'react'
 import './Gamepage.css'
 import Partybar from '../components/Partybar'
+import GameTracker from '../components/GameTracker';
 
 class Gamepage extends React.Component{
 
     render(){
         return(
-                <Partybar />
+                <React.Fragment>
+                    <Partybar />
+                    <GameTracker />
+                </React.Fragment>
         )
     }
 }

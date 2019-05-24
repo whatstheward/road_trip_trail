@@ -1,5 +1,5 @@
 import React from 'react'
-import './Partybar.css'
+import './css/Partybar.css'
 import CharacterCard from './CharacterCard.js'
 import { Header, Icon, Image, Menu, Segment, Sidebar, Card } from 'semantic-ui-react'
 
