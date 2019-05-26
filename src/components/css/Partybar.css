@@ -1,7 +1,10 @@
-.ui#sidebar{
-    top: 7em;
-    width: 15em;
-    border-right: solid;    
-    border-right-width: 1px;
-    border-color: black
+#partybar{
+    margin-top: 20em;
+    display: flex;
+    justify-content: center;
+}
+
+#partycards{
+    display:flex;
+    justify-content: flex-start;
 }

@@ -1,15 +1,18 @@
 import React from 'react'
+import './css/CharacterCard.css'
 import {Card, Image, Icon} from 'semantic-ui-react'
 const CharacterCard =(props)=>{
 
     return(
-        <Card>
-            <Card.Content>
-            <Image size="small" src='https://avataaars.io/?avatarStyle=Transparent&topType=LongHairFro&accessoriesType=Blank&hairColor=Black&facialHairType=BeardLight&facialHairColor=BrownDark&clotheType=ShirtCrewNeck&clotheColor=Heather&eyeType=Default&eyebrowType=Default&mouthType=Smile&skinColor=DarkBrown'></Image>
-                <Card.Header> Character Name </Card.Header>
-                <p><Icon name='heart' size='small' /> Morale </p>
-            </Card.Content>
-        </Card>
+        <div id="characterCard" className="ui card">
+            <div id="cardContent" className=" ui content">
+                <div className="frame">
+                    <img className="ui small image" src={props.characterInfo.image_url}></img>
+                </div>
+                <h4> {props.characterInfo.name} </h4>
+                <p><Icon name='heart' size='small' /> {props.characterInfo.morale}/10 </p>
+            </div>
+        </div>
     )
 }
 

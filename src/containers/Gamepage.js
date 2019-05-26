@@ -1,16 +1,20 @@
 import React from 'react'
 import './Gamepage.css'
 import Partybar from '../components/Partybar'
-import GameTracker from '../components/GameTracker';
+import Windshield from '../components/Windshield';
+import { Grid } from 'semantic-ui-react'
 
 class Gamepage extends React.Component{
 
     render(){
         return(
-                <React.Fragment>
-                    <Partybar />
-                    <GameTracker />
-                </React.Fragment>
+            <Grid>
+                <Grid.Column width={3}>
+                </Grid.Column>
+                <Grid.Column width={10}>
+                    <Windshield />
+                </Grid.Column>
+            </Grid>
         )
     }
 }

@@ -12,10 +12,9 @@ class GameTracker extends React.Component{
 
     render(){
         return(
-            <div class="ui progress" data-percent="55">
-            <div class="bar" style="width:55%"></div>
-            <div class="label">Label</div>
-          </div>
+            <div id="gametracker" class="ui progress" data-percent="0">
+                <div class="bar" style={{width:'0%'}}><Car /></div>
+            </div>
         )
     }
 }

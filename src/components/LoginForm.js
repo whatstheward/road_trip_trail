@@ -19,6 +19,7 @@ class LoginForm extends React.Component{
                         <label>Password</label><input type="password" placeholder="Last Name" />
                     </div>
                     <button type="submit" className="ui button">Submit</button>
+                    <button className="ui button" onClick={()=>this.registerNewUser()}>New User</button>
                 </form>
             </div>
         </div>

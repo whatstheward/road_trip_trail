@@ -2,3 +2,10 @@ img#car {
     width:5em;
 }
 
+#gametracker{
+    width: 50%;
+    margin-left:auto;
+    margin-right:auto;
+    top: 20em;
+}
+
