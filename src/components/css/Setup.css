@@ -1,0 +1,18 @@
+
+#container {
+    display: flex;
+    justify-content: center;
+}
+
+#setupForm {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap
+}
+
+form .ui.card {
+    width: 20em;
+    height: 18em;
+    margin: 1em;
+}

@@ -5,7 +5,7 @@ import Windshield from '../components/Windshield';
 import { Grid } from 'semantic-ui-react'
 
 class Gamepage extends React.Component{
-
+    
     render(){
         return(
             <Grid>

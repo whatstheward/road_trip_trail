@@ -10,6 +10,9 @@ class Partybar extends  React.Component{
             sessionCharacters: []
         }
     }
+    handleClick = () =>{
+        console.log('clicked')
+    }
 
     componentDidMount(){
         fetch("http://localhost:3000/characters")
@@ -21,7 +24,7 @@ class Partybar extends  React.Component{
         return(
                 <div id="partybar">
                     <div id="partycards">
-                        {this.state.sessionCharacters.map(character => <CharacterCard characterInfo={character}/>)}
+                        {this.state.sessionCharacters.map(character => <CharacterCard handleClick={this.handleClick} characterInfo={character}/>)}
                     </div>
                 </div>
         )

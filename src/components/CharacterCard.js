@@ -4,7 +4,7 @@ import {Card, Image, Icon} from 'semantic-ui-react'
 const CharacterCard =(props)=>{
 
     return(
-        <div id="characterCard" className="ui card">
+        <div id="characterCard" className="ui card" onClick={(e)=>props.handleClick(e, props.characterInfo)}>
             <div id="cardContent" className=" ui content">
                 <div className="frame">
                     <img className="ui small image" src={props.characterInfo.image_url}></img>

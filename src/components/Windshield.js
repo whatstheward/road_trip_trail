@@ -8,9 +8,12 @@ class Windshield extends React.Component{
     constructor(props){
         super(props)
         this.state={
-            user: ""
+            user: "" || this.props.user
         }
     }
+
+    
+
     render(){
         return(
             <Grid>
