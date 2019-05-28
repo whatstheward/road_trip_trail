@@ -123,7 +123,8 @@ class Setup extends React.Component{
                                 }}
                                 className="ui button primary"
                                 title="Let's Go"
-                                />
+                                onClick={()=> this.handleSubmit()}
+                                >Let's Go</Link>
             </Grid>
         )
     }
