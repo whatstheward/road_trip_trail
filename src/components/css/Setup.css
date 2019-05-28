@@ -11,6 +11,7 @@
     flex-wrap: wrap
 }
 
+
 div .ui.card {
     width: 20em;
     height: 18em;
@@ -31,6 +32,13 @@ div .ui.card {
     position: sticky;
     top: 0px;
     width: 10em;
+    z-index: 100;
+}
+#familyList{
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0px;
+    width: 15em;
     z-index: 100;
 }
 

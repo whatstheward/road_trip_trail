@@ -1,6 +1,31 @@
-#gamewindow{
-    width: 75%;
+#gameContainer{
+    display: flex;
+    justify-content: center;
+}
+
+#gameCard {
+    border: thick double;
+    border-color: greenyellow;
+    border-radius: 30px;
+    width: 30em;
+    height: 25em;
+    background-color: black;
+}
+
+#gameCardText{
+    font-family: 'VT323', monospace;
+    color: greenyellow;
+}
+
+#gameCardButton{
+    background-color: black;
+    border: thick double;
+    border-color: greenyellow;
+}
+
+#gameWindow{
+    align-items: center;
+    width: 100%;
     height: 40em;
-    margin-bottom: -20em;
-    background-image: url("https://cdn.stocksnap.io/img-thumbs/960w/XJ2BKV9ASS.jpg");
+    background-size: 100%;
 }

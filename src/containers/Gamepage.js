@@ -5,18 +5,16 @@ import Windshield from '../components/Windshield';
 import { Grid } from 'semantic-ui-react'
 import Inventory from '../components/Inventory'
 
-const Gamepage =(props)=>{
-console.log("handleclick", props.location.state.handleClick)
-            return(
-                <Grid>
-                <Grid.Column width={3}>
-                </Grid.Column>
-                <Grid.Column width={10}>
-                    <Windshield  characters={props.location.state.characters} vehicle={props.location.state.vehicle} items={props.location.state.items} />
-                    <Inventory items={props.location.state.items} handleClick={props.handleClick}/>
-                </Grid.Column>
-            </Grid>
+class Gamepage extends React.Component{
+    state={locations: []}
+
+    render(){
+        return(
+        <div>
+            <Windshield  characters={this.props.location.state.characters} vehicle={this.props.location.state.vehicle} items={this.props.location.state.items} locations={this.state.locations} />
+        </div>
         )
     }
+}
 
 export default Gamepage
