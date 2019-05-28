@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom'
 
 class Setup extends React.Component{
     constructor(props){
-        super(props)    
+        super(props)
         this.state={
             username: "",
             family: "",
@@ -19,7 +19,7 @@ class Setup extends React.Component{
             items: []
         }
     }
-        
+
     componentDidMount(){
         fetch('http://localhost:3000/vehicles')
         .then(res => res.json())
@@ -53,11 +53,18 @@ class Setup extends React.Component{
         }
     }
 
-    handleSubmit=()=>{
-        localStorage.setItem("characters", this.state.submittedCharacters)
+
+    handleClick =(x)=>{
+      console.log(this.state.items.filter(item => item.name !== x.name))
+      let newArray = this.state.items.filter(item => item.name !== x.name)
+
+      this.setState = {
+        items: newArray
+      }
     }
 
     render(){
+      console.log("handleclick in setup", this.handleClick)
         return(
             <Grid id="setupForm" className="ui form">
                     <Grid.Row>
@@ -95,7 +102,7 @@ class Setup extends React.Component{
                     </Grid.Column>
                     <Grid.Column width={3}>
                     <div  id="inventoryList" >
-                            <div className="ui card">   
+                            <div className="ui card">
                                 <div className="header">Your Inventory:</div>
                                 <div className="content">
                                     <ul>
@@ -111,8 +118,9 @@ class Setup extends React.Component{
                                     state: {characters: this.state.submittedCharacters,
                                             vehicle: this.state.submittedVehicle,
                                             items: this.state.items,
-                                            family: this.state.family}
-                                }} 
+                                            family: this.state.family,
+                                            handleClick: this.handleClick}
+                                }}
                                 className="ui button primary"
                                 title="Let's Go"
                                 onClick={()=> this.handleSubmit()}

@@ -3,9 +3,13 @@ import './Gamepage.css'
 import Windshield from '../components/Windshield';
 import PropTypes from "prop-types";
 import { withRouter } from "react-router";
+import { Grid } from 'semantic-ui-react'
+import Inventory from '../components/Inventory'
+
 
 class Gamepage extends React.Component{
     state={locations: []}
+
 
     static propTypes = {
         match: PropTypes.object.isRequired,
@@ -19,7 +23,7 @@ class Gamepage extends React.Component{
         .then(res=>res.json())
         .then(locationsArray=>this.setState({locations: locationsArray}))
     }
-        
+       
     render(){
         return(
         <div>
