@@ -4,17 +4,16 @@ import Partybar from '../components/Partybar'
 import Windshield from '../components/Windshield';
 import { Grid } from 'semantic-ui-react'
 
-const Gamepage =(props)=>{
+class Gamepage extends React.Component{
+    state={locations: []}
         
-            return(
-                <Grid>
-                <Grid.Column width={3}>
-                </Grid.Column>
-                <Grid.Column width={10}>
-                    <Windshield  characters={props.location.state.characters} vehicle={props.location.state.vehicle} items={props.location.state.items} />
-                </Grid.Column>
-            </Grid>
+    render(){
+        return(
+        <div>
+            <Windshield  characters={this.props.location.state.characters} vehicle={this.props.location.state.vehicle} items={this.props.location.state.items} locations={this.state.locations} />
+        </div>
         )
     }
+}
 
 export default Gamepage

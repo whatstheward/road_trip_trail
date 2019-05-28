@@ -6,7 +6,6 @@ import ItemCard from './ItemCard'
 import Gamepage from '../containers/Gamepage'
 import { Grid } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
-// import { threadId } from 'worker_threads';
 
 class Setup extends React.Component{
     constructor(props){
@@ -54,15 +53,6 @@ class Setup extends React.Component{
         }
     }
 
-    handleSubmit=()=>{
-        this.history.push({
-            pathname: '/game',
-            state:{
-
-            }
-        })
-    }
-
     render(){
         return(
             <Grid id="setupForm" className="ui form">
@@ -80,7 +70,14 @@ class Setup extends React.Component{
                             {this.props.characters.map(character => <CharacterCard handleClick={this.chooseCharacter} characterInfo={character} />)}
                         </div>
                         </Grid.Column>
-                        <Grid.Column width={3}></Grid.Column>
+                        <Grid.Column width={3}>
+                            <div id="familyList" className="ui card">
+                                <div className="header">Your Family</div>
+                                <ul>
+                                    {this.state.submittedCharacters.map(character=><li>{character.name}</li>)}
+                                </ul>
+                            </div>
+                        </Grid.Column>
                     </Grid.Row>
                     <Grid.Row>
                     <Grid.Column width={3}></Grid.Column>
@@ -107,9 +104,10 @@ class Setup extends React.Component{
                     </Grid.Row>
                         <Link to={{
                                     pathname: "/game",
-                                    state: { characters: this.state.submittedCharacters,
+                                    state: {characters: this.state.submittedCharacters,
                                             vehicle: this.state.submittedVehicle,
-                                            items: this.state.items}
+                                            items: this.state.items,
+                                            family: this.state.family}
                                 }} 
                                 className="ui button primary"
                                 title="Let's Go"
