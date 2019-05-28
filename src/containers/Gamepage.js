@@ -1,19 +1,32 @@
 import React from 'react'
 import './Gamepage.css'
-import Partybar from '../components/Partybar'
 import Windshield from '../components/Windshield';
-import { Grid } from 'semantic-ui-react'
+import PropTypes from "prop-types";
+import { withRouter } from "react-router";
 
 class Gamepage extends React.Component{
     state={locations: []}
+
+    static propTypes = {
+        match: PropTypes.object.isRequired,
+        location: PropTypes.object.isRequired,
+        history: PropTypes.object.isRequired
+      };
+    
+    componentDidMount(){
+        // console.log(this.location.state)
+        fetch('http://localhost:3000/locations')
+        .then(res=>res.json())
+        .then(locationsArray=>this.setState({locations: locationsArray}))
+    }
         
     render(){
         return(
         <div>
-            <Windshield  characters={this.props.location.state.characters} vehicle={this.props.location.state.vehicle} items={this.props.location.state.items} locations={this.state.locations} />
+            <Windshield  characters={this.props.characters} locations={this.state.locations} />
         </div>
         )
     }
 }
 
-export default Gamepage
+export default withRouter(Gamepage)

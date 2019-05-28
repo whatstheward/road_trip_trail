@@ -53,6 +53,10 @@ class Setup extends React.Component{
         }
     }
 
+    handleSubmit=()=>{
+        localStorage.setItem("characters", this.state.submittedCharacters)
+    }
+
     render(){
         return(
             <Grid id="setupForm" className="ui form">
@@ -111,7 +115,8 @@ class Setup extends React.Component{
                                 }} 
                                 className="ui button primary"
                                 title="Let's Go"
-                                />
+                                onClick={()=> this.handleSubmit()}
+                                >Let's Go</Link>
             </Grid>
         )
     }
