@@ -12,7 +12,8 @@ import Setup from './components/Setup'
 class App extends React.Component {
   state={
     vehicles: [],
-    characters: []
+    characters: [],
+    items: []
   }
 
   componentDidMount(){
@@ -22,6 +23,9 @@ class App extends React.Component {
     fetch('http://localhost:3000/characters')
     .then(res => res.json())
     .then(chars => this.setState({characters: chars}))
+    fetch('http://localhost:3000/items')
+    .then(res => res.json())
+    .then(itemsData => this.setState({items: itemsData}))
 }
 
   render(){
@@ -31,7 +35,7 @@ class App extends React.Component {
         <Switch>
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
-        <Route path="/gamesetup" render={()=><Setup characters={this.state.characters} vehicles={this.state.vehicles}/>} />
+        <Route path="/gamesetup" render={()=><Setup items={this.state.items} characters={this.state.characters} vehicles={this.state.vehicles}/>} />
         <Route path="/game" component={Gamepage} />
         </Switch>
       </div>

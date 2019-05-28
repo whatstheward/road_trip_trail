@@ -24,7 +24,7 @@ class Windshield extends React.Component{
                     <GameTracker />
                 </Grid.Row>
                 <Grid.Row >
-                    <Partybar />
+                    <Partybar characters={this.props.characters} />
                 </Grid.Row>
             </Grid>
 

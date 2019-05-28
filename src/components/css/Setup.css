@@ -1,6 +1,6 @@
 
 #container {
-    display: flex;
+    display: inline-flex;
     justify-content: center;
 }
 
@@ -11,8 +11,29 @@
     flex-wrap: wrap
 }
 
-form .ui.card {
+div .ui.card {
     width: 20em;
     height: 18em;
     margin: 1em;
+}
+
+#itemHeader{
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0px;
+    background-color: white;
+    width: 100%;
+    z-index: 100;
+}
+
+#inventoryList{
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0px;
+    width: 10em;
+    z-index: 100;
+}
+
+#inventoryList .ui.card{
+    height:auto;
 }
