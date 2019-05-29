@@ -1,0 +1,17 @@
+#scoreboard{
+    height: auto;
+}
+
+#user{
+    font-weight: bold;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 1.5em;
+}
+
+#score {
+    font-size: 1.5em;
+}
+
+li {
+    margin-bottom: 1em;
+}

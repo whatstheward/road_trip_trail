@@ -7,6 +7,34 @@ import { Grid } from 'semantic-ui-react';
 import { Link } from 'react-router-dom'
 import Scoreboard from './Scoreboard'
 
+const triviaCategories = 
+    [{"id": 0, "name": "All"},
+    {"id": 9, "name": "General Knowledge"},
+    {"id": 10, "name": "Entertainment: Books"},
+    {"id": 11, "name": "Entertainment: Film"},
+    {"id": 12, "name": "Entertainment: Music"},
+    {"id": 13, "name": "Entertainment: Musicals & Theatres"},
+    {"id": 14, "name": "Entertainment: Television"},
+    {"id": 15, "name": "Entertainment: Video Games"},
+    {"id": 16, "name": "Entertainment: Board Games"},
+    {"id": 17, "name": "Science & Nature"},
+    {"id": 18, "name": "Science: Computers"},
+    {"id": 19, "name": "Science: Mathematics"},
+    {"id": 20, "name": "Mythology"},
+    {"id": 21, "name": "Sports"},
+    {"id": 22, "name": "Geography"},
+    {"id": 23, "name": "History"},
+    {"id": 24, "name": "Politics"},
+    {"id": 25, "name": "Art"},
+    {"id": 26, "name": "Celebrities"},
+    {"id": 27, "name": "Animals"},
+    {"id": 28, "name": "Vehicles"},
+    {"id": 29, "name": "Entertainment: Comics"},
+    {"id": 30, "name": "Science: Gadgets"},
+    {"id": 31, "name": "Entertainment: Japanese Anime & Manga"},
+    {"id": 32, "name": "Entertainment: Cartoon & Animations"}
+    ]
+
 class GameWindow extends React.Component {
     state={locations:[],
             background: "https://cdn.stocksnap.io/img-thumbs/960w/XJ2BKV9ASS.jpg",
@@ -23,17 +51,18 @@ class GameWindow extends React.Component {
     fetch('http://localhost:3000/locations')
     .then(res=>res.json())
     .then(locationsArray=>this.setState({locations: locationsArray}))
-    fetch(`https://opentdb.com/api.php?amount=10&category=9&difficulty=${this.state.difficulty}&type=boolean`)
-    .then(res => res.json())
-    .then(data => this.setState({questions: data.results}))
+    fetch(`https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=boolean`)
+        .then(res => res.json())
+        .then(data => this.setState({questions: data.results}))
     }
 
-    handleClick=()=>{
+    gameSetup=()=>{
         this.setState({ headerText: `Stop ${this.state.counter+1}: ${this.state.locations[this.state.counter].name}`,
                         background: this.state.locations[this.state.counter].imageUrl,
                         counter: 1,
                         progress: 10})
     }
+
     useItem=(itemObj)=>{
         const characterObj = this.getLowestMorale()
         let index = this.state.items.indexOf(itemObj)
@@ -51,12 +80,38 @@ class GameWindow extends React.Component {
         this.setState({characters: updateCharacters,
                         items: updateItems})
     }
-    handleChange=(e)=>{
-        this.setState({difficult: e.target.value})
-        fetch(`https://opentdb.com/api.php?amount=11&category=9&difficulty=${this.state.difficulty}&type=boolean`)
-        .then(res => res.json())
-        .then(data => this.setState({questions: data.results}))
+
+    handleErrors(response) {
+        if (!response.ok) {
+            throw Error(response.statusText);
+        }
+        return response;
     }
+
+    getQuestions=(e)=>{
+        e.preventDefault()
+        let difficulty = e.target.difficulty.value
+        let category = e.target.category.value
+        let categoryName = e.target.category[e.target.category.selectedIndex].text
+        if (category === 0){
+            fetch('https://opentdb.com/api.php?amount=10&difficulty=hard&type=boolean')
+            .then(data =>{  if(data.response_code === 1){
+                alert(`Sorry, we don't have any ${difficulty} questions for ${categoryName}. Please pick again.`)
+                return null
+            }else{ 
+                this.setState({questions: data.results})}
+                this.gameSetup()})
+        }else{
+        fetch(`https://opentdb.com/api.php?amount=10&category=${category}&difficulty=${difficulty}&type=boolean`)
+        .then(res => res.json())
+        .then(data =>{  if(data.response_code === 1){
+                            alert(`Sorry, we don't have any ${difficulty} questions for ${categoryName}. Please pick again.`)
+                            return null
+                        }else{ 
+                            this.setState({questions: data.results})}
+                            this.gameSetup()})
+        .catch(error => console.log(error))
+        }}
 
     gameStart(){
         return <div id="gameWindow" className="ui card" style={{backgroundImage: `url(${this.state.background})`}} >
@@ -64,14 +119,21 @@ class GameWindow extends React.Component {
         <div id="gameCard">
         <h1 id="gameCardText">Start your road trip!</h1>
         <div>
+        <form onSubmit={(e)=>this.getQuestions(e)}>
         <h2 id="gameCardText">Select your difficulty</h2>
-        <select onChange={(e)=> this.handleChange(e)}>
+        <select name="difficulty">
             <option value="easy">Easy</option>
             <option value="medium">Medium</option>
             <option value="hard">Hard</option>
         </select>
+        <h2 id="gameCardText">Select your category</h2>
+        <select name="category">
+            {triviaCategories.map(category=> <option value={category.id}>{category.name}</option>)}
+        </select>
+        <br></br>
+        <button type="submit" id="gameCardButton"><h3 id="gameCardText">Get questions</h3></button>
+        </form>
         </div>
-        <button onClick={()=>this.handleClick()} id="gameCardButton"><h3 id="gameCardText">Let's Go!</h3></button>
         </div>
     </div>
     }
@@ -88,9 +150,17 @@ class GameWindow extends React.Component {
     }
 
     handleSelection = (question, answer) => {
+        let points = 0
+        if(question.difficulty === 'easy'){
+            points = 100
+        }else if(question.difficulty === 'medium'){
+            points = 200
+        }else if(question.difficulty === 'hard'){
+            points  = 300
+        }
         if(question.correct_answer == answer){
             this.setState({
-                score: this.state.score + 100,
+                score: this.state.score + points,
                 counter: this.state.counter+1,
                 progress: this.state.progress+10,
                 background: this.state.locations[this.state.counter].imageUrl
@@ -110,7 +180,7 @@ class GameWindow extends React.Component {
                 }
             })
             this.setState({characters: updateCharacters,
-                            score: this.state.score - 100,
+                            score: this.state.score - points,
                             counter: this.state.counter+1,
                             progress: this.state.progress+10,
                             background: this.state.locations[this.state.counter].imageUrl})
@@ -119,12 +189,13 @@ class GameWindow extends React.Component {
 
     gamePlay(){
         let trivia = this.state.questions[this.state.counter-1]
+        let question = trivia.question.replace('"','')
         return (
         <div id="gameWindow" className="ui card" style={{backgroundImage: `url(${this.state.background})`}} >
             <h2 className="ui header block">Score: {this.state.score}</h2>
             <div id="gameCard">
                 <h1 id="gameCardText">Question {this.state.counter}</h1>
-                <h3 id="gameCardText">{trivia.question}</h3>
+                <h3 id="gameCardText" dangerouslySetInnerHTML={{__html: `${question}`}}></h3>
                 <button type="button" id="gameCardButton" onClick={()=>this.handleSelection(trivia, "True")}><h3 id="gameCardText">True</h3></button>
                 <button id="gameCardButton" onClick={()=>this.handleSelection(trivia, "False")}><h3 id="gameCardText">False</h3></button>
             </div>
@@ -173,22 +244,17 @@ class GameWindow extends React.Component {
                 {this.runGame()}
             </Grid.Column>
             <Grid.Column width={3}>
-
+                <Scoreboard />
             </Grid.Column>
             </Grid.Row>
             <Grid.Row>
             <Grid.Column width={3}></Grid.Column>
             <Grid.Column width={10}>
                 <GameTracker location={this.state.locations[this.state.counter-1]} progress={this.state.progress} />
+                <h2 style={{margin: '-.5em'}}>{this.props.family}</h2>
                 <PartyBar characters={this.state.characters} />
             </Grid.Column>
             <Grid.Column width={3}></Grid.Column>
-            </Grid.Row>
-
-            <Grid.Row>
-              <Grid.Column>
-                <Scoreboard />
-              </Grid.Column>
             </Grid.Row>
             </Grid>
         )

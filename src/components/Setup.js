@@ -13,6 +13,7 @@ class Setup extends React.Component{
             username: "",
             family: "",
             wallet: 100,
+            characters:[],
             submittedVehicle: "",
             submittedCharacters: [],
             items: []
@@ -20,9 +21,9 @@ class Setup extends React.Component{
     }
 
     componentDidMount(){
-        fetch('http://localhost:3000/vehicles')
+        fetch('http://localhost:3000/characters')
         .then(res => res.json())
-        .then(cars => this.setState({vehicles: cars}))
+        .then(chars => this.setState({characters: chars}))
     }
 
     handleChange=(e)=>{
@@ -72,7 +73,7 @@ class Setup extends React.Component{
                         <Grid.Column width={10} >
                         <h2>Pick {this.state.submittedVehicle ? this.state.submittedVehicle.seats : 5} characters to be in your family:</h2>
                         <div id="setupForm">
-                            {this.props.characters.map(character => <CharacterCard handleClick={this.chooseCharacter} characterInfo={character} />)}
+                            {this.state.characters.map(character => <CharacterCard handleClick={this.chooseCharacter} characterInfo={character} />)}
                         </div>
                         </Grid.Column>
                         <Grid.Column width={3}>

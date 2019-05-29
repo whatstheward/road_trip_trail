@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, Redirect } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Login from './components/LoginForm'
 import Register from './components/RegisterForm'
@@ -15,16 +15,13 @@ class App extends React.Component {
     vehicles: [],
     characters: [],
     items: [],
-    loggedIn: false
+    loggedIn: !!localStorage.getItem("token")
   }
 
   componentDidMount(){
     fetch('http://localhost:3000/vehicles')
     .then(res => res.json())
     .then(cars => this.setState({vehicles: cars}))
-    fetch('http://localhost:3000/characters')
-    .then(res => res.json())
-    .then(chars => this.setState({characters: chars}))
     fetch('http://localhost:3000/items')
     .then(res => res.json())
     .then(itemsData => this.setState({items: itemsData}))
@@ -40,10 +37,19 @@ logIn=()=>{
         <Navbar color="teal" icon="map" loggedIn={this.state.loggedIn} logIn={this.logIn} />
         <Switch>
         <Route path="/login" render={()=><Login logIn={this.logIn} />} />
-        <Route path="/register" component={Register} />
+        <Route path="/register" render={()=><Register logIn={this.logIn}/>}  />
         <Route path="/complete" component={Complete} />
-        <Route path="/gamesetup" render={()=><Setup items={this.state.items} characters={this.state.characters} vehicles={this.state.vehicles}/>} />
-        <Route path="/game" render={()=><Gamepage />} />
+        <Route path="/gamesetup" render={()=>(
+                                              !this.state.loggedIn ? (
+                                                <Redirect to='/login'/>
+                                                ):(
+                                                <Setup items={this.state.items} characters={this.state.characters} vehicles={this.state.vehicles}/>))} />
+        <Route exact path="/game" render={()=>(
+                                              !this.state.loggedIn ? (
+                                                <Redirect to='/login'/>
+                                                ):(
+                                                <Gamepage />)
+                                                        )}/>
         </Switch>
       </div>
   )}

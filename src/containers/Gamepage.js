@@ -16,10 +16,12 @@ class Gamepage extends React.Component{
       };
     
     componentDidMount(){
-        // console.log(this.location.state)
+        if(!localStorage.getItem("token")){
+            this.props.history.push('/login')
+        }else{
         fetch('http://localhost:3000/locations')
         .then(res=>res.json())
-        .then(locationsArray=>this.setState({locations: locationsArray}))
+        .then(locationsArray=>this.setState({locations: locationsArray}))}
     }
        
     render(){

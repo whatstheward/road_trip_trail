@@ -28,6 +28,7 @@
 #gameWindow{
     align-items: center;
     width: 100%;
-    height: 40em;
-    background-size: 100%;
+    height: 35em;
+    background-size: cover;
+    background-repeat: no-repeat;
 }

@@ -4,11 +4,11 @@ import './css/Inventory.css'
 const Inventory = (props) => {
 
   return(
-    <div className="ui card">
+    <div id="inventoryCard" className="ui card">
     <h2>Inventory</h2>
-    <ul id="itemList">
+    <div id="itemList">
       {props.items.map(item => <div>{item.name} <button onClick={() => props.useItem(item)}> Use </button> </div>)}
-    </ul>
+    </div>
     </div>
   )
 }
