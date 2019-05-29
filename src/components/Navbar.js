@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 class Navbar extends React.Component {
-    
+
     render(){
         return(
             <div className="ui inverted teal menu" style={{height: '7em'}}>
@@ -15,8 +15,9 @@ class Navbar extends React.Component {
                 {
                     this.props.loggedIn ?
                     <>
+                <Link to="/about" className="item"> About</Link>    
                 <Link to="/gamesetup" className="item"> New Game</Link>
-                <Link to="/login" className="ui item" 
+                <Link to="/login" className="ui item"
                 onClick={(e)=>{ this.props.logIn()
                                 localStorage.clear()}} > <div className="content">Logout</div> </Link>
                 </>
