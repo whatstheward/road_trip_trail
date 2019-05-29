@@ -5,6 +5,7 @@ import Inventory from './Inventory'
 import PartyBar from './Partybar'
 import { Grid } from 'semantic-ui-react';
 import { Link } from 'react-router-dom'
+import Scoreboard from './Scoreboard'
 
 class GameWindow extends React.Component {
     state={locations:[],
@@ -172,16 +173,22 @@ class GameWindow extends React.Component {
                 {this.runGame()}
             </Grid.Column>
             <Grid.Column width={3}>
-                
+
             </Grid.Column>
             </Grid.Row>
             <Grid.Row>
             <Grid.Column width={3}></Grid.Column>
             <Grid.Column width={10}>
-                <GameTracker location={this.state.locations[this.state.counter-1]} progress={this.state.progress} /> 
-                <PartyBar characters={this.state.characters} />  
+                <GameTracker location={this.state.locations[this.state.counter-1]} progress={this.state.progress} />
+                <PartyBar characters={this.state.characters} />
             </Grid.Column>
             <Grid.Column width={3}></Grid.Column>
+            </Grid.Row>
+
+            <Grid.Row>
+              <Grid.Column>
+                <Scoreboard />
+              </Grid.Column>
             </Grid.Row>
             </Grid>
         )
