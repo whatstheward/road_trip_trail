@@ -3,7 +3,6 @@ import './css/Setup.css'
 import VehicleCard from './VehicleCard'
 import CharacterCard from './CharacterCard'
 import ItemCard from './ItemCard'
-import Gamepage from '../containers/Gamepage'
 import { Grid } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
@@ -53,16 +52,6 @@ class Setup extends React.Component{
         }
     }
 
-
-    // handleClick =(x)=>{
-    //   console.log(this.state.items.filter(item => item.name !== x.name))
-    //   let newArray = this.state.items.filter(item => item.name !== x.name)
-
-    //   this.setState = {
-    //     items: newArray
-    //   }
-    // }
-
     render(){
         return(
             <Grid id="setupForm" className="ui form">
@@ -75,6 +64,12 @@ class Setup extends React.Component{
                         <div id="setupForm">
                             {this.props.vehicles.map(vehicle => <VehicleCard vehicle={vehicle} chooseVehicle={this.chooseVehicle} />)}
                         </div>
+                        </Grid.Column>
+                        <Grid.Column width={3}></Grid.Column>
+                    </Grid.Row>
+                    <Grid.Row>
+                    <Grid.Column width={3}></Grid.Column>
+                        <Grid.Column width={10} >
                         <h2>Pick {this.state.submittedVehicle ? this.state.submittedVehicle.seats : 5} characters to be in your family:</h2>
                         <div id="setupForm">
                             {this.props.characters.map(character => <CharacterCard handleClick={this.chooseCharacter} characterInfo={character} />)}

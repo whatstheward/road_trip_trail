@@ -1,5 +1,7 @@
 import React from 'react'
 import './css/LoginForm.css'
+import PropTypes from "prop-types";
+import { withRouter } from "react-router";
 
 class LoginForm extends React.Component{
     state={
@@ -7,6 +9,10 @@ class LoginForm extends React.Component{
         password: "",
         errors: []
     }
+
+    static propTypes = {
+        history: PropTypes.object.isRequired
+    };
 
     handleSubmit = (e) => {
         e.preventDefault()
@@ -27,6 +33,7 @@ class LoginForm extends React.Component{
             } else {
                 localStorage.setItem("token", data.token)
                 localStorage.setItem("username", data.user)
+                this.props.logIn()
                 this.props.history.push({
                     pathname: '/gamesetup',
                     state: {username: this.state.username }
@@ -35,10 +42,23 @@ class LoginForm extends React.Component{
         })
     }
 
+    displayErrors = () => {
+        return(
+            <ul>
+                {this.state.errors.map(error=> <li style={{color:'red'}}><h3>{error}</h3></li>)}
+            </ul>
+        )
+    }
+
     render(){
         return(
         <div>
             <h2>Please Login to your account or create a new user:</h2>
+            {this.state.errors.length > 0 ? 
+                this.displayErrors()
+                :
+                null
+                }
             <div id="loginForm" className="ui container">
                 <div id="login" className="ui card">
                     <form onSubmit={(e)=>this.handleSubmit(e)} className="ui form">
@@ -59,4 +79,4 @@ class LoginForm extends React.Component{
     }
 }
 
-export default LoginForm
+export default withRouter(LoginForm)

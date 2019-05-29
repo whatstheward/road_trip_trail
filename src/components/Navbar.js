@@ -1,9 +1,9 @@
 import React from 'react'
-import { Menu } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
-const Navbar = () => {
-
+class Navbar extends React.Component {
+    
+    render(){
         return(
             <div className="ui inverted teal menu" style={{height: '7em'}}>
                 <h2 className="ui header">
@@ -12,18 +12,20 @@ const Navbar = () => {
                     <div className="sub header">a modern expedition</div>
                     </div>
                 </h2>
-            <Menu.Item>
-                <Link to="/gamesetup"> New Game</Link>
-            </Menu.Item>
-            <Menu.Item>
-                {localStorage.getItem("token") ?
-                <Link to="/" className="ui button" 
-                onClick={()=>localStorage.clear()} > Logout </Link>
+                {
+                    this.props.loggedIn ?
+                    <>
+                <Link to="/gamesetup" className="item"> New Game</Link>
+                <Link to="/login" className="ui item" 
+                onClick={(e)=>{ this.props.logIn()
+                                localStorage.clear()}} > <div className="content">Logout</div> </Link>
+                </>
                 :
-                <Link to="/login" className="ui button"> Login </Link>}
-            </Menu.Item>
+                <Link to="/login" className="ui item"> <div className="content">Login</div> </Link>
+                }
             </div>)
     }
+}
 
 
 export default Navbar

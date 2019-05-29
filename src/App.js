@@ -14,7 +14,8 @@ class App extends React.Component {
   state={
     vehicles: [],
     characters: [],
-    items: []
+    items: [],
+    loggedIn: false
   }
 
   componentDidMount(){
@@ -29,12 +30,16 @@ class App extends React.Component {
     .then(itemsData => this.setState({items: itemsData}))
 }
 
+logIn=()=>{
+  this.setState({loggedIn: !this.state.loggedIn})
+}
+
   render(){
     return (
       <div className="App">
-        <Navbar color="teal" icon="map" />
+        <Navbar color="teal" icon="map" loggedIn={this.state.loggedIn} logIn={this.logIn} />
         <Switch>
-        <Route path="/login" component={Login} />
+        <Route path="/login" render={()=><Login logIn={this.logIn} />} />
         <Route path="/register" component={Register} />
         <Route path="/complete" component={Complete} />
         <Route path="/gamesetup" render={()=><Setup items={this.state.items} characters={this.state.characters} vehicles={this.state.vehicles}/>} />
