@@ -12,11 +12,14 @@ const Navbar = () => {
                     <div className="sub header">a modern expedition</div>
                     </div>
                 </h2>
-            <Menu.Item name='editorials'>
+            <Menu.Item>
+                <Link to="/gamesetup"> New Game</Link>
+            </Menu.Item>
+            <Menu.Item>
                 {localStorage.getItem("token") ?
                 <Link to="/" className="ui button" 
-                onClick={(e)=>localStorage.clear()} > Logout </Link>
-                    :
+                onClick={()=>localStorage.clear()} > Logout </Link>
+                :
                 <Link to="/login" className="ui button"> Login </Link>}
             </Menu.Item>
             </div>)

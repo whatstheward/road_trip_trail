@@ -1,10 +1,10 @@
-#partybar{
+
+#completeContainer{
     display: flex;
     justify-content: center;
 }
 
-#partycards{
-    display:flex;
-    flex-direction: row;
+#complete{
+    display: flex;
     justify-content: center;
 }

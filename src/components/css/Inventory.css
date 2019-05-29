@@ -1,0 +1,12 @@
+#itemList{
+    width: 18em;
+    display: block;
+}
+
+#itemList > div{
+    text-align: left;
+    margin: .5em;
+}
+#itemList > div > button{
+    float: right;
+}

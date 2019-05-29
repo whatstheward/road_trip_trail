@@ -1,4 +1,5 @@
 import React from 'react'
+import './css/VehicleCard.css'
 
 const VehicleCard = (props) => {
     return(
@@ -7,7 +8,9 @@ const VehicleCard = (props) => {
                 <div className="header">
                     {props.vehicle.make + " " + props.vehicle.model}
                 </div>
-                <img style={{width: '10em'}} src="https://www.driven.co.nz/media/132850/40ee258200000578-4556492-image-a-47_1496175629749.jpg?width=820" />
+                <div id="carBox">
+                    <img style={{width: '10em'}} src={props.vehicle.imageUrl} />
+                </div>
                 <ul>
                     <li>Seats: {props.vehicle.seats}</li>
                     <li>Gas Tank: {props.vehicle.gas} gallons</li>

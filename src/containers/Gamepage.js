@@ -1,10 +1,8 @@
 import React from 'react'
 import './Gamepage.css'
-import Windshield from '../components/Windshield';
+import GameWindow from '../components/GameWindow';
 import PropTypes from "prop-types";
 import { withRouter } from "react-router";
-import { Grid } from 'semantic-ui-react'
-import Inventory from '../components/Inventory'
 
 
 class Gamepage extends React.Component{
@@ -27,7 +25,7 @@ class Gamepage extends React.Component{
     render(){
         return(
         <div>
-            <Windshield  characters={this.props.characters} locations={this.state.locations} />
+            <GameWindow  push={this.props.history.push} locations={this.state.locations} items={this.props.location.state.items} characters={this.props.location.state.characters} family={this.props.location.state.family} vehicle={this.props.location.state.vehicle} />  
         </div>
         )
     }

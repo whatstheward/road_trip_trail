@@ -1,11 +1,14 @@
 import React from 'react'
+import './css/Inventory.css'
 
 const Inventory = (props) => {
 
   return(
-    <div>
+    <div className="ui card">
     <h2>Inventory</h2>
-      {props.items.map(item => <li>{item.name} <button onClick={(e) => props.handleClick(item)}> Redeem </button> </li>)}
+    <ul id="itemList">
+      {props.items.map(item => <div>{item.name} <button onClick={() => props.useItem(item)}> Use </button> </div>)}
+    </ul>
     </div>
   )
 }

@@ -14,11 +14,13 @@
 
 .frame{
     height: 10em;
-    width: 10em;;
+    width: 10em;
     overflow: hidden;
+    margin-left:auto;
+    margin-right:auto;
 }
 
-.frame img {
-    height: auto;
+.frame > img {
+    height: 10em;
     width:10em;
 }

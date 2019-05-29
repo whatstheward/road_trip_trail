@@ -6,6 +6,10 @@ const GameTracker =(props) => {
         return(
             <div id="gametracker">
                 <Progress value={props.progress} percent={props.progress} indicating/>
+                {props.location ? 
+                <label>{props.location.name}</label>
+                :
+                null}
             </div>
         )
     }

@@ -7,6 +7,7 @@ import Login from './components/LoginForm'
 import Register from './components/RegisterForm'
 import Gamepage from './containers/Gamepage'
 import Setup from './components/Setup'
+import Complete from './components/Complete'
 
 
 class App extends React.Component {
@@ -35,6 +36,7 @@ class App extends React.Component {
         <Switch>
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
+        <Route path="/complete" component={Complete} />
         <Route path="/gamesetup" render={()=><Setup items={this.state.items} characters={this.state.characters} vehicles={this.state.vehicles}/>} />
         <Route path="/game" render={()=><Gamepage />} />
         </Switch>

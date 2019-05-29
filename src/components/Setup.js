@@ -54,17 +54,16 @@ class Setup extends React.Component{
     }
 
 
-    handleClick =(x)=>{
-      console.log(this.state.items.filter(item => item.name !== x.name))
-      let newArray = this.state.items.filter(item => item.name !== x.name)
+    // handleClick =(x)=>{
+    //   console.log(this.state.items.filter(item => item.name !== x.name))
+    //   let newArray = this.state.items.filter(item => item.name !== x.name)
 
-      this.setState = {
-        items: newArray
-      }
-    }
+    //   this.setState = {
+    //     items: newArray
+    //   }
+    // }
 
     render(){
-      console.log("handleclick in setup", this.handleClick)
         return(
             <Grid id="setupForm" className="ui form">
                     <Grid.Row>
@@ -118,12 +117,9 @@ class Setup extends React.Component{
                                     state: {characters: this.state.submittedCharacters,
                                             vehicle: this.state.submittedVehicle,
                                             items: this.state.items,
-                                            family: this.state.family,
-                                            handleClick: this.handleClick}
+                                            family: this.state.family}
                                 }}
                                 className="ui button primary"
-                                title="Let's Go"
-                                onClick={()=> this.handleSubmit()}
                                 >Let's Go</Link>
             </Grid>
         )

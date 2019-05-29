@@ -5,10 +5,6 @@ import CharacterCard from './CharacterCard.js'
 
 class Partybar extends  React.Component{
 
-    handleClick = () =>{
-        console.log('clicked')
-    }
-
     render(){
         return(
                 <div id="partybar">

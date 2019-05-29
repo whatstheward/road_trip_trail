@@ -4,6 +4,7 @@
 }
 
 #gameCard {
+    justify-content: center;
     border: thick double;
     border-color: greenyellow;
     border-radius: 30px;
@@ -21,6 +22,7 @@
     background-color: black;
     border: thick double;
     border-color: greenyellow;
+    margin:5em 1em 1em 1em;
 }
 
 #gameWindow{
