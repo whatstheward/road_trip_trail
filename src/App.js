@@ -8,7 +8,7 @@ import Register from './components/RegisterForm'
 import Gamepage from './containers/Gamepage'
 import Setup from './components/Setup'
 import Complete from './components/Complete'
-
+import About from './components/About'
 
 class App extends React.Component {
   state={
@@ -38,7 +38,11 @@ logIn=()=>{
         <Switch>
         <Route path="/login" render={()=><Login logIn={this.logIn} />} />
         <Route path="/register" render={()=><Register logIn={this.logIn}/>}  />
-        <Route path="/complete" component={Complete} />
+        <Route path="/complete" render={()=>((
+                                              !this.state.loggedIn ? (
+                                                <Redirect to='/login'/>
+                                                ):(
+                                                <Complete/>)))} />
         <Route path="/gamesetup" render={()=>(
                                               !this.state.loggedIn ? (
                                                 <Redirect to='/login'/>
