@@ -44,14 +44,15 @@ class GameWindow extends React.Component {
             questions: [],
             score: 0,
             characters: this.props.characters,
-            items: this.props.items
+            items: this.props.items,
+            randomAnswers: []
             }
 
     componentDidMount(){
     fetch('http://localhost:3000/locations')
     .then(res=>res.json())
     .then(locationsArray=>this.setState({locations: locationsArray}))
-    fetch(`https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=boolean`)
+    fetch(`https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple`)
         .then(res => res.json())
         .then(data => this.setState({questions: data.results}))
     }
@@ -102,7 +103,7 @@ class GameWindow extends React.Component {
                 this.setState({questions: data.results})}
                 this.gameSetup()})
         }else{
-        fetch(`https://opentdb.com/api.php?amount=10&category=${category}&difficulty=${difficulty}&type=boolean`)
+        fetch(`https://opentdb.com/api.php?amount=10&category=${category}&difficulty=${difficulty}&type=multiple`)
         .then(res => res.json())
         .then(data =>{  if(data.response_code === 1){
                             alert(`Sorry, we don't have any ${difficulty} questions for ${categoryName}. Please pick again.`)
@@ -163,7 +164,8 @@ class GameWindow extends React.Component {
                 score: this.state.score + points,
                 counter: this.state.counter+1,
                 progress: this.state.progress+10,
-                background: this.state.locations[this.state.counter].imageUrl
+                background: this.state.locations[this.state.counter].imageUrl,
+                randomAnswers: []
             })
         } else {
             const x = this.getRandomCharacter()
@@ -180,28 +182,39 @@ class GameWindow extends React.Component {
                 }
             })
             this.setState({characters: updateCharacters,
-                            score: this.state.score - points,
-                            counter: this.state.counter+1,
-                            progress: this.state.progress+10,
-                            background: this.state.locations[this.state.counter].imageUrl})
+                            score: this.state.score - points
+                        })
         }
     }
 
     gamePlay(){
         let trivia = this.state.questions[this.state.counter-1]
         let question = trivia.question.replace('"','')
+        let answers = [...trivia.incorrect_answers, trivia.correct_answer]
+        this.printAnswers(answers)
         return (
         <div id="gameWindow" className="ui card" style={{backgroundImage: `url(${this.state.background})`}} >
             <h2 className="ui header block">Score: {this.state.score}</h2>
             <div id="gameCard">
                 <h1 id="gameCardText">Question {this.state.counter}</h1>
                 <h3 id="gameCardText" dangerouslySetInnerHTML={{__html: `${question}`}}></h3>
-                <button type="button" id="gameCardButton" onClick={()=>this.handleSelection(trivia, "True")}><h3 id="gameCardText">True</h3></button>
-                <button id="gameCardButton" onClick={()=>this.handleSelection(trivia, "False")}><h3 id="gameCardText">False</h3></button>
+                {this.state.randomAnswers.map(answer => {
+                    return <button type="button" id="gameCardButton" onClick={()=>this.handleSelection(trivia, answer)}><h3 id="gameCardText">{answer}</h3></button>
+                })}
             </div>
         </div>
         )
     }
+
+    printAnswers(answers){
+        for(let i = this.state.randomAnswers.length; i < 4; i++){
+            let answer = answers[Math.floor(Math.random()*4)]
+            if(this.state.randomAnswers.includes(answer)){
+                this.printAnswers(answers)
+            }else{
+                this.setState({randomAnswers: [...this.state.randomAnswers, answer]})
+            }}
+        }
 
     endGame=()=>{
         return(

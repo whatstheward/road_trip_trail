@@ -67,7 +67,7 @@ class LoginForm extends React.Component{
                                     <label>Username</label><input onChange={(e)=>{this.setState({username: e.target.value})}} type="text" placeholder="First Name" />
                                 </div>
                                 <div className="field">
-                                    <label>Password</label><input onChange={(e)=>{this.setState({password: e.target.value})}} type="password" placeholder="Last Name" />
+                                    <label>Password</label><input onChange={(e)=>{this.setState({password: e.target.value})}} type="password" placeholder="Password" />
                                 </div>
                                 <button type="submit" className="ui button">Submit</button>
                                 <button className="ui button" onClick={()=>this.props.history.push('/register')}>New User</button>

@@ -20,7 +20,7 @@ class Complete extends React.Component{
 
     componentDidMount(){
         let totalScore = this.state.score + this.state.moralePoints
-        fetch("http://localhost:3000/scoreboards",{
+        fetch("http://localhost:3000/scores",{
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

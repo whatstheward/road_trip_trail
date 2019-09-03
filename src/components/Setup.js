@@ -53,6 +53,14 @@ class Setup extends React.Component{
         }
     }
 
+    handleDeleteCharacter(e){
+        this.setState({submittedCharacters: this.state.submittedCharacters.filter(character => character.id != e.target.dataset.id)})
+    }
+    
+    handleDeleteItem(e){
+        this.setState({items: this.state.items.filter(item => item.id != e.target.dataset.id)})
+    }
+
     render(){
         return(
             <Grid id="setupForm" className="ui form">
@@ -80,7 +88,12 @@ class Setup extends React.Component{
                             <div id="familyList" className="ui card">
                                 <div className="header">Your Family</div>
                                 <ul>
-                                    {this.state.submittedCharacters.map(character=><li>{character.name}</li>)}
+                                    {this.state.submittedCharacters.map(character=>{
+                                    return(
+                                    <li>{character.name} 
+                                    <button data-id={character.id} onClick={(e)=>{this.handleDeleteCharacter(e)}}>X</button>
+                                    </li>
+                                    )})}
                                 </ul>
                             </div>
                         </Grid.Column>
@@ -101,7 +114,13 @@ class Setup extends React.Component{
                                 <div className="header">Your Inventory:</div>
                                 <div className="content">
                                     <ul>
-                                        {this.state.items.map(item=><li>{item.name}</li>)}
+                                        {this.state.items.map(item=>{
+                                        return(
+                                        <li>{item.name}
+                                        <button data-id={item.id} onClick={(e)=>{this.handleDeleteItem(e)}}>X
+                                        </button>
+                                        </li>
+                                        )})}
                                     </ul>
                                 </div>
                             </div>

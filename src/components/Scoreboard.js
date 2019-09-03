@@ -17,12 +17,16 @@ class Scoreboard extends React.Component {
   }
 
   componentDidMount(){
-    fetch('http://localhost:3000/scoreboards/?limit=10')
+    fetch('http://localhost:3000/scores/?limit=10')
     .then(res => res.json())
-    .then(scoreData => {let sortScores = scoreData.sort(this.compare)
-                        this.setState({scores: sortScores.reverse()})
-                      })
-                    }
+    .then(scoreData => this.sortScores(scoreData))}
+
+  sortScores(scoreData){
+    let sortScores = scoreData.sort(this.compare)
+    this.setState({scores: sortScores.reverse()})
+  }
+
+  
   
 
   render(){
@@ -30,7 +34,7 @@ class Scoreboard extends React.Component {
       <div id="scoreboard" className="ui card">
         <h2>Scoreboard</h2>
         <ol>
-        {this.state.scores.map(score=><li><span id="user">{score.username}</span> - <span id="score">{score.score}</span></li>)}
+        {this.state.scores.map(score=><li><span id="user">{score.user}</span> - <span id="score">{score.score}</span></li>)}
         </ol>
       </div>
     )
