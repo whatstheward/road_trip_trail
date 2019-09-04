@@ -7,14 +7,41 @@
 #setupForm {
     width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     flex-wrap: wrap
 }
 
+#setupVehicles{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 1em;
+    width: 100%;
+}
 
-div .ui.card {
+#setupVehicles > .ui.card {
+    display: flex;
+    justify-content: center;
+    margin: 1em;
+}
+
+
+div > .ui.card {
     width: 20em;
     height: 18em;
+    margin: 1em;
+}
+#setupInventory{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap
+}
+
+#setupInventory > .ui.card {
+    width: 10em;
+    display: flex;
+    justify-content: space-evenly;
     margin: 1em;
 }
 
@@ -24,6 +51,14 @@ div .ui.card {
     top: 0px;
     background-color: white;
     width: 100%;
+    z-index: 100;
+}
+
+#submittedVehicle{
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0px;
+    width: 15em;
     z-index: 100;
 }
 
@@ -40,8 +75,4 @@ div .ui.card {
     top: 0px;
     width: 15em;
     z-index: 100;
-}
-
-#inventoryList .ui.card{
-    height:auto;
 }

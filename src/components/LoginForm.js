@@ -31,7 +31,7 @@ class LoginForm extends React.Component{
                 this.setState({errors: data.errors })
             } else {
                 localStorage.setItem("token", data.token)
-                localStorage.setItem("username", data.user)
+                localStorage.setItem("username", data.username)
                 this.props.logIn()
                 this.props.history.push('/gamesetup')
             }

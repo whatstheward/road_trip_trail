@@ -6,34 +6,9 @@ import PartyBar from './Partybar'
 import { Grid } from 'semantic-ui-react';
 import { Link } from 'react-router-dom'
 import Scoreboard from './Scoreboard'
+import triviaCategories from '../helpers/triviaCategories'
 
-const triviaCategories = 
-    [{"id": 0, "name": "All"},
-    {"id": 9, "name": "General Knowledge"},
-    {"id": 10, "name": "Entertainment: Books"},
-    {"id": 11, "name": "Entertainment: Film"},
-    {"id": 12, "name": "Entertainment: Music"},
-    {"id": 13, "name": "Entertainment: Musicals & Theatres"},
-    {"id": 14, "name": "Entertainment: Television"},
-    {"id": 15, "name": "Entertainment: Video Games"},
-    {"id": 16, "name": "Entertainment: Board Games"},
-    {"id": 17, "name": "Science & Nature"},
-    {"id": 18, "name": "Science: Computers"},
-    {"id": 19, "name": "Science: Mathematics"},
-    {"id": 20, "name": "Mythology"},
-    {"id": 21, "name": "Sports"},
-    {"id": 22, "name": "Geography"},
-    {"id": 23, "name": "History"},
-    {"id": 24, "name": "Politics"},
-    {"id": 25, "name": "Art"},
-    {"id": 26, "name": "Celebrities"},
-    {"id": 27, "name": "Animals"},
-    {"id": 28, "name": "Vehicles"},
-    {"id": 29, "name": "Entertainment: Comics"},
-    {"id": 30, "name": "Science: Gadgets"},
-    {"id": 31, "name": "Entertainment: Japanese Anime & Manga"},
-    {"id": 32, "name": "Entertainment: Cartoon & Animations"}
-    ]
+
 
 class GameWindow extends React.Component {
     state={locations:[],
@@ -43,9 +18,8 @@ class GameWindow extends React.Component {
             difficulty: "easy",
             questions: [],
             score: 0,
-            characters: this.props.characters,
-            items: this.props.items,
-            randomAnswers: []
+            randomAnswers: [],
+            items: this.props.items
             }
 
     componentDidMount(){
@@ -58,28 +32,42 @@ class GameWindow extends React.Component {
     }
 
     gameSetup=()=>{
-        this.setState({ headerText: `Stop ${this.state.counter+1}: ${this.state.locations[this.state.counter].name}`,
-                        background: this.state.locations[this.state.counter].imageUrl,
+        this.setState({ background: this.state.locations[this.state.counter].imageUrl,
                         counter: 1,
                         progress: 10})
     }
 
-    useItem=(itemObj)=>{
-        const characterObj = this.getLowestMorale()
-        let index = this.state.items.indexOf(itemObj)
-        console.log(index)
-        let updateCharacters = this.state.characters.map(character=>{
+    forward = () => {
+        this.setState({ background: this.state.locations[this.state.counter].imageUrl,
+            counter: this.state.counter + 1,
+            progress: this.state.progress + 10})
+    }
+
+    backward = (points) => {
+        const x = this.getRandomCharacter()
+        let characterObj = this.props.characters[x]
+        let updateCharacters = this.props.characters.map(character=>{
             if(character.id === characterObj.id){
-                character.morale = character.morale+1
-                return character
+                character.morale = character.morale - 1
+                if(character.morale < 1){
+                    alert("YOU LOSE!")
+                }else{
+                return character}
             }else{
                 return character
             }
         })
-        let updateItems = [...this.state.items]
-        updateItems.splice(index, 1)
         this.setState({characters: updateCharacters,
-                        items: updateItems})
+            score: this.state.score - points})
+    }
+
+    useItem=(itemObj)=>{
+        const characterObj = this.getLowestMorale()
+        let toRemove = this.state.items.find(item => item.id == itemObj.id)
+        debugger
+        this.setState({items: this.state.items.filter(item => item.id != toRemove.id)})
+        this.props.characters.find(character => character.id === characterObj.id).morale += 1
+
     }
 
     handleErrors(response) {
@@ -94,15 +82,6 @@ class GameWindow extends React.Component {
         let difficulty = e.target.difficulty.value
         let category = e.target.category.value
         let categoryName = e.target.category[e.target.category.selectedIndex].text
-        if (category === 0){
-            fetch('https://opentdb.com/api.php?amount=10&difficulty=hard&type=boolean')
-            .then(data =>{  if(data.response_code === 1){
-                alert(`Sorry, we don't have any ${difficulty} questions for ${categoryName}. Please pick again.`)
-                return null
-            }else{ 
-                this.setState({questions: data.results})}
-                this.gameSetup()})
-        }else{
         fetch(`https://opentdb.com/api.php?amount=10&category=${category}&difficulty=${difficulty}&type=multiple`)
         .then(res => res.json())
         .then(data =>{  if(data.response_code === 1){
@@ -112,31 +91,33 @@ class GameWindow extends React.Component {
                             this.setState({questions: data.results})}
                             this.gameSetup()})
         .catch(error => console.log(error))
-        }}
+        }
 
     gameStart(){
-        return <div id="gameWindow" className="ui card" style={{backgroundImage: `url(${this.state.background})`}} >
-        <h2 className="ui header block">Welcome to The Road Trip Trail</h2>
-        <div id="gameCard">
-        <h1 id="gameCardText">Start your road trip!</h1>
-        <div>
-        <form onSubmit={(e)=>this.getQuestions(e)}>
-        <h2 id="gameCardText">Select your difficulty</h2>
-        <select name="difficulty">
-            <option value="easy">Easy</option>
-            <option value="medium">Medium</option>
-            <option value="hard">Hard</option>
-        </select>
-        <h2 id="gameCardText">Select your category</h2>
-        <select name="category">
-            {triviaCategories.map(category=> <option value={category.id}>{category.name}</option>)}
-        </select>
-        <br></br>
-        <button type="submit" id="gameCardButton"><h3 id="gameCardText">Get questions</h3></button>
-        </form>
+        return (
+        <div id="gameWindow" className="ui card" style={{backgroundImage: `url(${this.state.background})`}} >
+            <h2 className="ui header block">Welcome to The Road Trip Trail</h2>
+            <div id="gameCard">
+                <h1 id="gameCardText">Start your road trip!</h1>
+            <div>
+            <form onSubmit={(e)=>this.getQuestions(e)}>
+            <h2 id="gameCardText">Select your difficulty</h2>
+                <select name="difficulty">
+                    <option value="easy">Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="hard">Hard</option>
+                </select>
+            <h2 id="gameCardText">Select your category</h2>
+                <select name="category">
+                    {triviaCategories.map(category=> <option value={category.id}>{category.name}</option>)}
+                </select>
+                <br/>
+                <button type="submit" id="gameStartButton"><h3 id="gameCardText">Get questions</h3></button>
+                </form>
+                </div>
+            </div>
         </div>
-        </div>
-    </div>
+    )
     }
 
     getRandomCharacter=()=>{
@@ -151,7 +132,7 @@ class GameWindow extends React.Component {
     }
 
     handleSelection = (question, answer) => {
-        let points = 0
+        let points
         if(question.difficulty === 'easy'){
             points = 100
         }else if(question.difficulty === 'medium'){
@@ -160,30 +141,14 @@ class GameWindow extends React.Component {
             points  = 300
         }
         if(question.correct_answer == answer){
+            this.forward()
             this.setState({
                 score: this.state.score + points,
-                counter: this.state.counter+1,
-                progress: this.state.progress+10,
                 background: this.state.locations[this.state.counter].imageUrl,
                 randomAnswers: []
             })
         } else {
-            const x = this.getRandomCharacter()
-            let characterObj = this.state.characters[x]
-            let updateCharacters= this.state.characters.map(character=>{
-                if(character.id === characterObj.id){
-                    character.morale = character.morale - 1
-                    if(character.morale < 1){
-                        alert("YOU LOSE!")
-                    }else{
-                    return character}
-                }else{
-                    return character
-                }
-            })
-            this.setState({characters: updateCharacters,
-                            score: this.state.score - points
-                        })
+            this.backward(points)
         }
     }
 
@@ -191,26 +156,29 @@ class GameWindow extends React.Component {
         let trivia = this.state.questions[this.state.counter-1]
         let question = trivia.question.replace('"','')
         let answers = [...trivia.incorrect_answers, trivia.correct_answer]
-        this.printAnswers(answers)
+        this.storeAnswers(answers)
         return (
         <div id="gameWindow" className="ui card" style={{backgroundImage: `url(${this.state.background})`}} >
             <h2 className="ui header block">Score: {this.state.score}</h2>
             <div id="gameCard">
                 <h1 id="gameCardText">Question {this.state.counter}</h1>
                 <h3 id="gameCardText" dangerouslySetInnerHTML={{__html: `${question}`}}></h3>
+                <div id="gameCardAnswers">
+
                 {this.state.randomAnswers.map(answer => {
-                    return <button type="button" id="gameCardButton" onClick={()=>this.handleSelection(trivia, answer)}><h3 id="gameCardText">{answer}</h3></button>
+                    return <button type="button" id="gameCardButton" onClick={()=>this.handleSelection(trivia, answer)}><h3 id="gameCardText" dangerouslySetInnerHTML={{__html: `${answer}`}}></h3></button>
                 })}
+                </div>
             </div>
         </div>
         )
     }
 
-    printAnswers(answers){
+    storeAnswers(answers){
         for(let i = this.state.randomAnswers.length; i < 4; i++){
             let answer = answers[Math.floor(Math.random()*4)]
             if(this.state.randomAnswers.includes(answer)){
-                this.printAnswers(answers)
+                this.storeAnswers(answers)
             }else{
                 this.setState({randomAnswers: [...this.state.randomAnswers, answer]})
             }}
@@ -224,9 +192,9 @@ class GameWindow extends React.Component {
                     <Link to={{
                         pathname: '/complete',
                         state:{
-                                characters: this.state.characters,
+                                characters: this.props.characters,
                                 vehicle: this.props.vehicle,
-                                items: this.state.items,
+                                items: this.props.items,
                                 family: this.props.family,
                                 score: this.state.score
                         }
@@ -265,7 +233,7 @@ class GameWindow extends React.Component {
             <Grid.Column width={10}>
                 <GameTracker location={this.state.locations[this.state.counter-1]} progress={this.state.progress} />
                 <h2 style={{margin: '-.5em'}}>{this.props.family}</h2>
-                <PartyBar characters={this.state.characters} />
+                <PartyBar characters={this.props.characters} />
             </Grid.Column>
             <Grid.Column width={3}></Grid.Column>
             </Grid.Row>

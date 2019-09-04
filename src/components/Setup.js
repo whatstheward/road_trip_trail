@@ -70,18 +70,33 @@ class Setup extends React.Component{
                         <h2>Name your Family: </h2>
                         <input onChange={(e)=>this.handleChange(e)} type="text" name="family" placeholder="e.g. The Smiths" />
                         <h2>Please pick a vehicle: </h2>
-                        <div id="setupForm">
-                            {this.props.vehicles.map(vehicle => <VehicleCard vehicle={vehicle} chooseVehicle={this.chooseVehicle} />)}
+                        <div id="setupVehicles">
+                            {this.props.vehicles.map(vehicle => 
+                            this.state.submittedVehicle == vehicle ? 
+                            null
+                            :
+                            <VehicleCard vehicle={vehicle} chooseVehicle={this.chooseVehicle} />)}
                         </div>
                         </Grid.Column>
-                        <Grid.Column width={3}></Grid.Column>
+                        <Grid.Column width={3}>
+                                {this.state.submittedVehicle ?
+                                <div id="submittedVehicle">
+                                    <VehicleCard vehicle={this.state.submittedVehicle} />
+                                </div>
+                                :
+                                null
+                                }
+                        </Grid.Column>
                     </Grid.Row>
                     <Grid.Row>
                     <Grid.Column width={3}></Grid.Column>
                         <Grid.Column width={10} >
                         <h2>Pick {this.state.submittedVehicle ? this.state.submittedVehicle.seats : 5} characters to be in your family:</h2>
                         <div id="setupForm">
-                            {this.state.characters.map(character => <CharacterCard handleClick={this.chooseCharacter} characterInfo={character} />)}
+                            {this.state.characters.map(character => this.state.submittedCharacters.includes(character) ?
+                            null
+                            :
+                            <CharacterCard handleClick={this.chooseCharacter} characterInfo={character} />)}
                         </div>
                         </Grid.Column>
                         <Grid.Column width={3}>
@@ -104,8 +119,11 @@ class Setup extends React.Component{
                         <div id="itemHeader">
                         <h2>Let's go shopping! You have ${this.state.wallet} left to spend!</h2>
                         </div>
-                        <div id="setupForm">
-                            {this.props.items.map(item => <ItemCard buyItem={this.buyItem} itemData={item} />)}
+                        <div id="setupInventory">
+                            {this.props.items.map(item => this.state.items.includes(item) ?
+                            null
+                            :
+                            <ItemCard buyItem={this.buyItem} itemData={item} />)}
                         </div>
                     </Grid.Column>
                     <Grid.Column width={3}>

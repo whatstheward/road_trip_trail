@@ -6,7 +6,7 @@ const ItemCard = (props) => {
         <div id="itemCard" className="ui card">
             <div id="flex">
             <div className="header">
-                <h3>{props.itemData.name}</h3>
+                <h5>{props.itemData.name}</h5>
             </div>
             <div className="content">
                 <div className="frame">

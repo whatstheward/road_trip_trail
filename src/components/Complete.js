@@ -26,8 +26,9 @@ class Complete extends React.Component{
                 'Content-Type': 'application/json',
                 'Access-Token': localStorage.token
             },
-            body: JSON.stringify({username: localStorage.username,
-                                  score: totalScore})
+            body: JSON.stringify({
+                                user: localStorage.username,
+                                score: totalScore})
                         })
             .then(res=> res.json())
             .then(data=>console.log(data))

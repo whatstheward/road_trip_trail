@@ -15,7 +15,11 @@ const VehicleCard = (props) => {
                     <li>Seats: {props.vehicle.seats}</li>
                     <li>Gas Tank: {props.vehicle.gas} gallons</li>
                 </ul>
-                <button className="ui button" onClick={(e)=>props.chooseVehicle(e, props.vehicle)}>I'll take this one</button>
+                {   props.chooseVehicle ?
+                    <button className="ui button" onClick={(e)=>props.chooseVehicle(e, props.vehicle)}>I'll take this one</button>
+                    :
+                    null
+                }
             </div>
         </div>
     )
